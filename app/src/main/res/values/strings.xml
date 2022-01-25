@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyToDo</string>
+    <string name="mytodo">Mytodo</string>
+    <string name="add_your_first_notes">add your first notes…</string>
+    <string name="your_todo">your todo…</string>
+    <string name="add">add</string>
+</resources>
