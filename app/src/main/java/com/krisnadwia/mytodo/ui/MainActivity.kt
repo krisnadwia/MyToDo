@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.krisnadwia.mytodo.R
 import com.krisnadwia.mytodo.adapter.NoteAdapter
 import com.krisnadwia.mytodo.entity.Note
-import com.krisnadwia.mytodo.viewmodal.NotesViewModal
+import com.krisnadwia.mytodo.viewmodel.NotesViewModel
 
 class MainActivity : AppCompatActivity(), NoteAdapter.INotesRVAdapter {
     private lateinit var rvNotes: RecyclerView
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), NoteAdapter.INotesRVAdapter {
     private lateinit var btnAdd: Button
     private lateinit var etNotes: EditText
 
-    private lateinit var notesViewModal: NotesViewModal
+    private lateinit var notesViewModel: NotesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity(), NoteAdapter.INotesRVAdapter {
 
         val adapter = NoteAdapter(this, this)
         rvNotes.adapter = adapter
-        notesViewModal = ViewModelProvider(
+        notesViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-        )[NotesViewModal::class.java]
-        notesViewModal.allNotes.observe(this, { list ->
+        )[NotesViewModel::class.java]
+        notesViewModel.allNotes.observe(this) { list ->
             if (list.isEmpty()) {
                 rvNotes.visibility = View.INVISIBLE
                 llDummy.visibility = View.VISIBLE
@@ -51,12 +51,12 @@ class MainActivity : AppCompatActivity(), NoteAdapter.INotesRVAdapter {
                 rvNotes.visibility = View.VISIBLE
                 adapter.updateTodo(it)
             }
-        })
+        }
 
         btnAdd.setOnClickListener {
             val itext = etNotes.text.toString()
             if (itext.isNotEmpty()) {
-                notesViewModal.insertNotes(Note(itext))
+                notesViewModel.insertNotes(Note(itext))
                 etNotes.setText("")
             } else {
                 Toast.makeText(this, "field is empty", Toast.LENGTH_LONG).show()
@@ -65,6 +65,6 @@ class MainActivity : AppCompatActivity(), NoteAdapter.INotesRVAdapter {
     }
 
     override fun onItemClick(notes: Note) {
-        notesViewModal.deleteNotes(notes)
+        notesViewModel.deleteNotes(notes)
     }
 }

@@ -1,4 +1,4 @@
-package com.krisnadwia.mytodo.viewmodal
+package com.krisnadwia.mytodo.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -10,7 +10,7 @@ import com.krisnadwia.mytodo.repository.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NotesViewModal(application: Application) : AndroidViewModel(application) {
+class NotesViewModel(application: Application) : AndroidViewModel(application) {
     // private reference of repository
     private val repository: NoteRepository
 
